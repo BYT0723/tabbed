@@ -169,6 +169,8 @@ static char winid[64];
 static char **cmd;
 static char *wmname = "tabbed";
 static const char *geometry;
+static int use_wid = False;
+static int wid;
 
 char *argv0;
 
@@ -1049,6 +1051,10 @@ setup(void)
 
 	win = XCreateSimpleWindow(dpy, root, wx, wy, ww, wh, 0,
 	                          dc.norm[ColFG].pixel, dc.norm[ColBG].pixel);
+
+	if (use_wid)
+    XReparentWindow(dpy, win, wid, 0, 0);
+
 	XMapRaised(dpy, win);
 	XSelectInput(dpy, win, SubstructureNotifyMask | FocusChangeMask |
 	             ButtonPressMask | ExposureMask | KeyPressMask |
@@ -1342,6 +1348,10 @@ main(int argc, char *argv[])
 	case 'v':
 		die("tabbed-"VERSION", © 2009-2016 tabbed engineers, "
 		    "see LICENSE for details.\n");
+		break;
+	case 'w':
+		use_wid = True;
+		wid = strtol(EARGF(usage()), NULL, 0);
 		break;
 	default:
 		usage();
