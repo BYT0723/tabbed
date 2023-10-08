@@ -1054,7 +1054,7 @@ setup(void)
 	                          dc.norm[ColFG].pixel, dc.norm[ColBG].pixel);
 
 	if (use_wid)
-    XReparentWindow(dpy, win, wid, 0, 0);
+    XReparentWindow(dpy, win, wid, wx, wy);
 
 	XMapRaised(dpy, win);
 	XSelectInput(dpy, win, SubstructureNotifyMask | FocusChangeMask |
